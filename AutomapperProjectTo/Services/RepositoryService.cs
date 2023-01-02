@@ -25,12 +25,6 @@ namespace AutomapperProjectTo.Services
             await _repositoryContext.SaveChangesAsync();
         }
 
-        public async Task RemoveDataAsync()
-        {
-            _repositoryContext.Humans.RemoveRange(_repositoryContext.Humans);
-            await _repositoryContext.SaveChangesAsync();
-        }
-
         public async Task<List<HumanResponse>> GetHumansWithoutProjection()
         {
             var query = await _repositoryContext
@@ -51,13 +45,6 @@ namespace AutomapperProjectTo.Services
                 .ProjectTo<HumanResponse>(_mapper.ConfigurationProvider)
                 .Take(50)
                 .ToListAsync();
-        }
-
-        public static async Task<RepositoryService> CreateAsync(IMapper mapper)
-        {
-            var service = new RepositoryService(mapper);
-            await service.GenerateDataAsync();
-            return service;
         }
     }
 }
